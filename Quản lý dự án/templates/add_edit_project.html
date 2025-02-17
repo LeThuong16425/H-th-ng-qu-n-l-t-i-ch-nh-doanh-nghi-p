@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}Thêm/Sửa Dự Án{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-4 text-primary">Thêm/Sửa Dự Án</h2>
+    
+    <form method="post">
+        <div class="mb-3">
+            <label for="project_name" class="form-label">Tên Dự Án</label>
+            <input type="text" class="form-control" id="project_name" name="project_name" value="{{ project.project_name if project else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="start_date" class="form-label">Ngày Bắt Đầu</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ project.start_date if project else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="end_date" class="form-label">Ngày Kết Thúc</label>
+            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ project.end_date if project else '' }}">
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Trạng Thái</label>
+            <select class="form-select" id="status" name="status" required>
+                <option value="Hoàn Thành" {% if project and project.status == 'Hoàn Thành' %}selected{% endif %}>Hoàn Thành</option>
+                <option value="Đang Tiến Hành" {% if project and project.status == 'Đang Tiến Hành' %}selected{% endif %}>Đang Tiến Hành</option>
+                <option value="Hủy Bỏ" {% if project and project.status == 'Hủy Bỏ' %}selected{% endif %}>Hủy Bỏ</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="manager" class="form-label">Người Quản Lý</label>
+            <input type="text" class="form-control" id="manager" name="manager" value="{{ project.manager if project else '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ 'Cập Nhật' if project else 'Thêm Mới' }}</button>
+    </form>
+</div>
+{% endblock %}
