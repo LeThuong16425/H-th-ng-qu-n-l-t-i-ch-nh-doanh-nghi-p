@@ -59,10 +59,24 @@ class Transaction:
         conn.close()
 
     @staticmethod
-    def get_all_transactions():
+    def get_all_transactions(start_date=None, end_date=None, category=None, department=None):
         conn = Transaction.create_connection()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM transactions")
+        query = "SELECT * FROM transactions WHERE 1=1"
+        params = []
+        if start_date:
+            query += " AND date >= ?"
+            params.append(start_date)
+        if end_date:
+            query += " AND date <= ?"
+            params.append(end_date)
+        if category:
+            query += " AND category LIKE ?"
+            params.append(f"%{category}%")
+        if department:
+            query += " AND department LIKE ?"
+            params.append(f"%{department}%")
+        cur.execute(query, params)
         rows = cur.fetchall()
         transactions = [Transaction(*row) for row in rows]
         conn.close()
@@ -76,3 +90,18 @@ class Transaction:
         row = cur.fetchone()
         conn.close()
         return Transaction(*row) if row else None
+
+    @staticmethod
+    def get_monthly_revenue():
+        conn = Transaction.create_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT strftime('%Y-%m', date) AS month, SUM(amount) FROM transactions GROUP BY month")
+        rows = cur.fetchall()
+        conn.close()
+
+        # Process data for Chart.js
+        data = {
+            "months": [row[0] for row in rows],
+            "revenue": [row[1] for row in rows]
+        }
+        return data

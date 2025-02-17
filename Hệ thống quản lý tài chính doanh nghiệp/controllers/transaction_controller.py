@@ -14,8 +14,8 @@ class TransactionController:
         Transaction.delete_transaction(id)
 
     @staticmethod
-    def get_all_transactions():
-        return Transaction.get_all_transactions()
+    def get_all_transactions(start_date=None, end_date=None, category=None, department=None):
+        return Transaction.get_all_transactions(start_date, end_date, category, department)
 
     @staticmethod
     def get_transaction(id):
