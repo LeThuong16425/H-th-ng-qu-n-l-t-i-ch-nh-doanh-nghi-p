@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ transaction and 'Chỉnh sửa giao dịch' or 'Thêm giao dịch mới' }}{% endblock %}
+
+{% block content %}
+<h1 class="mt-4">{{ transaction and 'Chỉnh sửa giao dịch' or 'Thêm giao dịch mới' }}</h1>
+<form method="post">
+    <div class="form-group">
+        <label for="date">Ngày</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ transaction and transaction.date or '' }}">
+    </div>
+    <div class="form-group">
+        <label for="amount">Số tiền</label>
+        <input type="text" class="form-control" id="amount" name="amount" value="{{ transaction and transaction.amount or '' }}">
+    </div>
+    <div class="form-group">
+        <label for="category">Loại</label>
+        <input type="text" class="form-control" id="category" name="category" value="{{ transaction and transaction.category or '' }}">
+    </div>
+    <div class="form-group">
+        <label for="description">Mô tả</label>
+        <input type="text" class="form-control" id="description" name="description" value="{{ transaction and transaction.description or '' }}">
+    </div>
+    <div class="form-group">
+        <label for="department">Bộ phận</label>
+        <input type="text" class="form-control" id="department" name="department" value="{{ transaction and transaction.department or '' }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
+{% endblock %}
