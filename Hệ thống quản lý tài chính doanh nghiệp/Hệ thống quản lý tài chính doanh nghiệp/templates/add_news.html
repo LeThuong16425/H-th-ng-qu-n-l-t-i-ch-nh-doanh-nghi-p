@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title %}Thêm Tin tức{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4 text-primary">Thêm Tin tức Mới</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">Tiêu đề</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">Nội dung</label>
+            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="date" class="form-label">Ngày đăng</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng tin</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %}Thêm / Chỉnh sửa Giao dịch{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-3 text-primary">Thêm / Chỉnh sửa Giao dịch</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label for="date" class="form-label">Ngày</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ transaction and transaction.date or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="amount" class="form-label">Số tiền (VNĐ)</label>
+            <input type="number" step="0.01" class="form-control" id="amount" name="amount" value="{{ transaction and transaction.amount or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Loại giao dịch</label>
+            <input type="text" class="form-control" id="category" name="category" value="{{ transaction and transaction.category or '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Mô tả</label>
+            <textarea class="form-control" id="description" name="description">{{ transaction and transaction.description or '' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="department" class="form-label">Bộ phận</label>
+            <input type="text" class="form-control" id="department" name="department" value="{{ transaction and transaction.department or '' }}">
+        </div>
+        <button type="submit" class="btn btn-success">Lưu giao dịch</button>
+    </form>
+</div>
+{% endblock %}
