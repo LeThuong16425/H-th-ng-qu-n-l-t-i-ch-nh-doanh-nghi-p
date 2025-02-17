@@ -21,7 +21,7 @@ def add_news():
         content = request.form['content']
         date = request.form['date']
         News.add_news(title, content, date)
-        return redirect(url_for('index'))
+        return redirect(url_for('transaction_list'))
     return render_template('add_news.html')
 
 @app.route('/transaction')
@@ -42,7 +42,7 @@ def add_transaction():
         description = request.form['description']
         department = request.form['department']
         TransactionController.add_transaction(date, amount, category, description, department)
-        return redirect(url_for('index'))
+        return redirect(url_for('transaction_list'))
     return render_template('transaction_form.html', transaction=None)
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -54,14 +54,14 @@ def edit_transaction(id):
         description = request.form['description']
         department = request.form['department']
         TransactionController.update_transaction(id, date, amount, category, description, department)
-        return redirect(url_for('index'))
+        return redirect(url_for('transaction_list'))
     transaction = TransactionController.get_transaction(id)
     return render_template('transaction_form.html', transaction=transaction)
 
 @app.route('/delete/<int:id>')
 def delete_transaction(id):
     TransactionController.delete_transaction(id)
-    return redirect(url_for('index'))
+    return redirect(url_for('transaction_list'))
 
 @app.route('/dashboard')
 def dashboard():
