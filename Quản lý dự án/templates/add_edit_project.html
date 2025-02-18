@@ -3,35 +3,65 @@
 {% block title %}Thêm/Sửa Dự Án{% endblock %}
 
 {% block content %}
-<div class="card shadow-sm p-4">
-    <h2 class="mb-4 text-primary">Thêm/Sửa Dự Án</h2>
-    
-    <form method="post">
-        <div class="mb-3">
-            <label for="project_name" class="form-label">Tên Dự Án</label>
-            <input type="text" class="form-control" id="project_name" name="project_name" value="{{ project.project_name if project else '' }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="start_date" class="form-label">Ngày Bắt Đầu</label>
-            <input type="date" class="form-control" id="start_date" name="start_date" value="{{ project.start_date if project else '' }}" required>
-        </div>
-        <div class="mb-3">
-            <label for="end_date" class="form-label">Ngày Kết Thúc</label>
-            <input type="date" class="form-control" id="end_date" name="end_date" value="{{ project.end_date if project else '' }}">
-        </div>
-        <div class="mb-3">
-            <label for="status" class="form-label">Trạng Thái</label>
-            <select class="form-select" id="status" name="status" required>
-                <option value="Hoàn Thành" {% if project and project.status == 'Hoàn Thành' %}selected{% endif %}>Hoàn Thành</option>
-                <option value="Đang Tiến Hành" {% if project and project.status == 'Đang Tiến Hành' %}selected{% endif %}>Đang Tiến Hành</option>
-                <option value="Hủy Bỏ" {% if project and project.status == 'Hủy Bỏ' %}selected{% endif %}>Hủy Bỏ</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="manager" class="form-label">Người Quản Lý</label>
-            <input type="text" class="form-control" id="manager" name="manager" value="{{ project.manager if project else '' }}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">{{ 'Cập Nhật' if project else 'Thêm Mới' }}</button>
-    </form>
+<div class="container mt-4">
+    <h2 class="text-primary"><i class="fas fa-tasks"></i> Thêm/Sửa Dự Án</h2>
+
+    <div class="card shadow-sm p-4">
+        <form method="POST">
+            <!-- Project Name -->
+            <div class="mb-3">
+                <label for="project_name" class="form-label"><i class="fas fa-folder-open"></i> Tên Dự Án</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-folder"></i></span>
+                    <input type="text" class="form-control" id="project_name" name="project_name" value="{{ project[1] if project else '' }}" required>
+                </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="mb-3">
+                <label for="start_date" class="form-label"><i class="fas fa-calendar-alt"></i> Ngày Bắt Đầu</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                    <input type="date" class="form-control" id="start_date" name="start_date" value="{{ project[2] if project else '' }}" required>
+                </div>
+            </div>
+
+            <!-- End Date -->
+            <div class="mb-3">
+                <label for="end_date" class="form-label"><i class="fas fa-calendar-check"></i> Ngày Kết Thúc</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                    <input type="date" class="form-control" id="end_date" name="end_date" value="{{ project[3] if project else '' }}">
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="mb-3">
+                <label for="status" class="form-label"><i class="fas fa-clipboard-list"></i> Trạng Thái</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="Hoàn Thành" {% if project and project[4] == 'Hoàn Thành' %}selected{% endif %}>✅ Hoàn Thành</option>
+                        <option value="Đang Tiến Hành" {% if project and project[4] == 'Đang Tiến Hành' %}selected{% endif %}>⏳ Đang Tiến Hành</option>
+                        <option value="Hủy Bỏ" {% if project and project[4] == 'Hủy Bỏ' %}selected{% endif %}>❌ Hủy Bỏ</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Manager -->
+            <div class="mb-3">
+                <label for="manager" class="form-label"><i class="fas fa-user-tie"></i> Người Quản Lý</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="manager" name="manager" value="{{ project[5] if project else '' }}" required>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-save"></i> {{ 'Cập Nhật' if project else 'Thêm Mới' }}
+            </button>
+        </form>
+    </div>
 </div>
 {% endblock %}

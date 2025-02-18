@@ -75,3 +75,12 @@ class ProjectModel:
         rows = cursor.fetchall()
         conn.close()
         return rows
+    
+    @staticmethod
+    def get_project(id):
+        conn = ProjectModel.create_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM projects WHERE id=?", (id,))
+        row = cursor.fetchone()
+        conn.close()
+        return row if row else None

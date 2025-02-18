@@ -2,8 +2,12 @@ from models.project_model import ProjectModel
 
 class ProjectController:
     @staticmethod
-    def get_project(status=None, start_date=None, end_date=None):
+    def get_projects(status=None, start_date=None, end_date=None):
         return ProjectModel.get_projects(status=status, start_date=start_date, end_date=end_date)
+    
+    @staticmethod
+    def get_project(id):
+        return ProjectModel.get_project(id)
     
     @staticmethod
     def add_project(project_name, start_date, end_date, status, manager):

@@ -14,7 +14,7 @@ def projects():
     status = request.args.get('status')
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
-    projects = ProjectController.get_project(status=status, start_date=start_date, end_date=end_date)
+    projects = ProjectController.get_projects(status=status, start_date=start_date, end_date=end_date)
     return render_template('projects_list.html', projects=projects)
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -45,6 +45,23 @@ def edit_project(id):
 def delete_project(id):
     ProjectController.delete_project(id)
     return redirect(url_for('projects'))
+
+@app.route('/project/<int:id>')
+def project_details(id):
+    project = ProjectController.get_project(id)
+    if not project:
+        return "Project not found", 404
+    return render_template('project_details.html', project=project)
+@app.route('/add_news', methods=['GET', 'POST'])
+def add_news():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        NewsController.add_news(title, content)
+        return redirect(url_for('index'))  # Redirect back to the news page
+
+    return render_template('add_news.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

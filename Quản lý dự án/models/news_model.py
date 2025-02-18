@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 class NewsModel:
     @staticmethod
@@ -9,10 +10,22 @@ class NewsModel:
     def get_news():
         conn = NewsModel.create_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM news ORDER BY date DESC LIMIT 5")  # Get the latest 5 news
+        cursor.execute("SELECT * FROM news ORDER BY date DESC")
         rows = cursor.fetchall()
         conn.close()
         return rows
+
+    @staticmethod
+    def insert_news(title, content):
+        conn = NewsModel.create_connection()
+        cursor = conn.cursor()
+        
+        # Insert the news article with the current date
+        cursor.execute("INSERT INTO news (title, content, date) VALUES (?, ?, ?)",
+                       (title, content, datetime.now().strftime("%Y-%m-%d")))
+        
+        conn.commit()
+        conn.close()
 
 def create_news_table():
     conn = sqlite3.connect('projects.db')

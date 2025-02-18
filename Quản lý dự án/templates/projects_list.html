@@ -3,17 +3,18 @@
 {% block title %}Danh sách Dự Án{% endblock %}
 
 {% block content %}
-<div class="card shadow-sm p-4">
-    <h2 class="mb-4 text-primary">Danh sách Dự Án</h2>
-    
+<div class="container mt-4">
+    <h2 class="text-primary"><i class="fas fa-list"></i> Danh sách Dự Án</h2>
+
+    <!-- Search/Filter Form -->
     <form method="GET" action="{{ url_for('projects') }}" class="mb-4">
-        <div class="row">
+        <div class="row g-2">
             <div class="col-md-3">
                 <select class="form-select" name="status">
-                    <option value="">Chọn trạng thái</option>
-                    <option value="Hoàn Thành" {% if request.args.get('status') == 'Hoàn Thành' %}selected{% endif %}>Hoàn Thành</option>
-                    <option value="Đang Tiến Hành" {% if request.args.get('status') == 'Đang Tiến Hành' %}selected{% endif %}>Đang Tiến Hành</option>
-                    <option value="Hủy Bỏ" {% if request.args.get('status') == 'Hủy Bỏ' %}selected{% endif %}>Hủy Bỏ</option>
+                    <option value="">🔍 Chọn trạng thái</option>
+                    <option value="Hoàn Thành" {% if request.args.get('status') == 'Hoàn Thành' %}selected{% endif %}>✅ Hoàn Thành</option>
+                    <option value="Đang Tiến Hành" {% if request.args.get('status') == 'Đang Tiến Hành' %}selected{% endif %}>⏳ Đang Tiến Hành</option>
+                    <option value="Hủy Bỏ" {% if request.args.get('status') == 'Hủy Bỏ' %}selected{% endif %}>❌ Hủy Bỏ</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -23,42 +24,52 @@
                 <input type="date" class="form-control" name="end_date" value="{{ request.args.get('end_date') }}">
             </div>
             <div class="col-md-3">
-                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+                <button type="submit" class="btn btn-primary w-100"><i class="fas fa-search"></i> Tìm kiếm</button>
             </div>
         </div>
     </form>
 
-    <a href="{{ url_for('add_project') }}" class="btn btn-success mb-3">Thêm Mới Dự Án</a>
+    <a href="{{ url_for('add_project') }}" class="btn btn-success mb-3">
+        <i class="fas fa-plus"></i> Thêm Mới Dự Án
+    </a>
 
     <div class="table-responsive">
-        <table class="table table-hover table-bordered">
-            <thead class="table-dark">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark text-center">
                 <tr>
-                    <th>ID</th>
-                    <th>Tên Dự Án</th>
-                    <th>Ngày Bắt Đầu</th>
-                    <th>Ngày Kết Thúc</th>
-                    <th>Trạng Thái</th>
-                    <th>Người Quản Lý</th>
-                    <th>Thao Tác</th>
+                    <th><i class="fas fa-hashtag"></i> ID</th>
+                    <th><i class="fas fa-folder-open"></i> Tên Dự Án</th>
+                    <th><i class="fas fa-calendar-alt"></i> Ngày Bắt Đầu</th>
+                    <th><i class="fas fa-calendar-check"></i> Ngày Kết Thúc</th>
+                    <th><i class="fas fa-clipboard-list"></i> Trạng Thái</th>
+                    <th><i class="fas fa-user-tie"></i> Người Quản Lý</th>
+                    <th><i class="fas fa-cogs"></i> Thao Tác</th>
                 </tr>
             </thead>
             <tbody>
                 {% for project in projects %}
                 <tr>
-                    <td>{{ project[0] }}</td>
-                    <td>{{ project[1] }}</td>
-                    <td>{{ project[2] }}</td>
-                    <td>{{ project[3] }}</td>
+                    <td class="text-center">{{ project[0] }}</td>
                     <td>
-                        <span class="badge {% if project[4] == 'Hoàn Thành' %}bg-success{% elif project[4] == 'Đang Tiến Hành' %}bg-warning{% else %}bg-danger{% endif %}">
+                        <a href="{{ url_for('project_details', id=project[0]) }}" class="text-primary text-decoration-none fw-bold">
+                            <i class="fas fa-link"></i> {{ project[1] }}
+                        </a>
+                    </td>
+                    <td class="text-center">{{ project[2] }}</td>
+                    <td class="text-center">{{ project[3] }}</td>
+                    <td class="text-center">
+                        <span class="badge {% if project[4] == 'Hoàn Thành' %}bg-success{% elif project[4] == 'Đang Tiến Hành' %}bg-warning{% else %}bg-danger{% endif %} p-2">
                             {{ project[4] }}
                         </span>
                     </td>
-                    <td>{{ project[5] }}</td>
-                    <td>
-                        <a href="{{ url_for('edit_project', id=project[0]) }}" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="{{ url_for('delete_project', id=project[0]) }}" class="btn btn-danger btn-sm">Xóa</a>
+                    <td class="text-center">{{ project[5] }}</td>
+                    <td class="text-center">
+                        <a href="{{ url_for('edit_project', id=project[0]) }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        <a href="{{ url_for('delete_project', id=project[0]) }}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Xóa
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}

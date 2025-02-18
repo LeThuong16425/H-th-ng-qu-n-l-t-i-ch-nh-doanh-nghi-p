@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}Thêm Tin Tức{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-primary"><i class="fas fa-plus-circle"></i> Thêm Tin Tức</h2>
+
+    <div class="card shadow-sm p-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label"><i class="fas fa-heading"></i> Tiêu Đề</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="content" class="form-label"><i class="fas fa-align-left"></i> Nội Dung</label>
+                <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                <i class="fas fa-save"></i> Lưu Tin Tức
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
